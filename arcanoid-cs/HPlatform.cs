@@ -14,11 +14,11 @@ namespace Game
 
             if (side == Side.Top)
             {
-                y = 0;
+                y = game.rect.Top;
             }
             else if (side == Side.Bottom)
             {
-                y = game.rect.Height - rect.Height;
+                y = game.rect.Bottom - rect.Height;
             }
             else
             {

@@ -55,23 +55,23 @@ namespace Game
 
             if (isHorizontal)
             {
-                if (rect.X < breadth)
+                if (rect.X < game.rect.Left + breadth)
                 {
-                    rect.X = breadth;
-                } else if (rect.Right > game.rect.Width - breadth)
+                    rect.X = game.rect.Left + breadth;
+                } else if (rect.Right > game.rect.Right - breadth)
                 {
-                    rect.X = game.rect.Width - breadth - length;
+                    rect.X = game.rect.Right - breadth - length;
                 }
             }
             if (isVertical)
             {
-                if (rect.Y < breadth)
+                if (rect.Y < game.rect.Top + breadth)
                 {
-                    rect.Y = breadth;
+                    rect.Y = game.rect.Top + breadth;
                 }
-                else if (rect.Bottom > game.rect.Height - breadth)
+                else if (rect.Bottom > game.rect.Bottom - breadth)
                 {
-                    rect.Y = game.rect.Height - breadth - length;
+                    rect.Y = game.rect.Bottom - breadth - length;
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace Game
         public void Show(Graphics Graphics)
         {
             Graphics.FillRectangle(brush, rect);
-        }
+        }  
 
         private void Game_OnStateChange(object sender, GameEventArgs e)
         {

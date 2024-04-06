@@ -21,7 +21,7 @@ namespace Game
 
     public enum GameState
     {
-        Init, Setup, Run,
+        Init, Setup, Run, Inactive
     }
 
     public delegate void GameEvent(object sender, GameEventArgs e);
@@ -42,5 +42,10 @@ namespace Game
     public enum Side
     {
         Left, Right, Top, Bottom,
+    }
+
+    public class GameLevel
+    {
+        public int[][] map { get; set; }
     }
 }

@@ -46,6 +46,7 @@ namespace Game
 
             if (!game.rect.IntersectsWith(Rectangle.Round(rect)))
             {
+                isMoving = false;
                 if (OnLeave != null)
                 {
                     OnLeave(this, new EventArgs());
@@ -88,6 +89,9 @@ namespace Game
                     break;
                 case GameState.Run:
                     isMoving = true;
+                    break;
+                case GameState.Inactive:
+                    isMoving = false;
                     break;
             }
         }
