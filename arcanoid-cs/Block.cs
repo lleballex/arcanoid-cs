@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Game
+namespace arcanoid_cs
 {
     public class Block
     {
@@ -10,8 +10,8 @@ namespace Game
         {
             get { return health > 0; }
         }
-        public bool isMulti { get; protected set; } = false;
-        public bool isSolid { get; protected set; } = false;
+        public bool changesBallColor { get; protected set; } = false;
+        public virtual bool allowsWinning { get { return !isAlive; } }
 
         protected int health = 1;
 
@@ -23,7 +23,7 @@ namespace Game
             set { brush.Color = value; pen.Color = value; }
         }
 
-        public Block(IGame game, Point location, Color color_)
+        public Block(Game game, Point location, Color color_)
         {
             rect.Location = location;
             color = color_;
@@ -31,31 +31,17 @@ namespace Game
             game.OnCollide += Game_OnCollide;
         }
 
-        public void Show(Graphics graphics)
+        public virtual void Show(Graphics graphics)
         {
             if (isAlive)
             {
-                if (isSolid)
-                {
-                    Rectangle newRect = Rectangle.Round(rect);
-                    newRect.Width -= (int)pen.Width;
-                    newRect.Height -= (int)pen.Width;
-                    newRect.X += (int)pen.Width / 2;
-                    newRect.Y += (int)pen.Width / 2;
-                    graphics.DrawRectangle(pen, newRect);
-                }
-                else
-                {
-                    graphics.FillRectangle(brush, rect);
-                }
+                graphics.FillRectangle(brush, rect);
             }
         }
 
-        private void Game_OnCollide(object sender, GameEventArgs e)
+        protected virtual void Game_OnCollide(object sender, GameEventArgs e)
         {
-            if (e.block != this || e.ball == null) return;
-
-            if (isMulti || (!isSolid && color == e.ball.color))
+            if (e.block == this && e.ball != null && color == e.ball.color)
             {
                 health--;
             }

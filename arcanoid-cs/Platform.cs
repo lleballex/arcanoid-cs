@@ -1,8 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace Game
+namespace arcanoid_cs
 {
     public abstract class Platform
     {
@@ -11,13 +10,12 @@ namespace Game
             public bool Up, Right, Down, Left;
         }
 
-        protected IGame game;
+        protected Game game;
 
         public RectangleF rect;
 
-        protected float length = 160, breadth = 20;
-        protected float speed = 1.1f;
-        protected bool isVertical = false, isHorizontal = false;
+        protected const float length = 160, breadth = 20;
+        protected const float speed = 1.1f;
 
         protected Directions movementDirections = new Directions();
 
@@ -25,13 +23,13 @@ namespace Game
 
         protected SolidBrush brush = new SolidBrush(Color.White);
 
-        public Platform(IGame game_)
+        public Platform(Game game_, Form form)
         {
             game = game_;
 
             game.OnStateChange += Game_OnStateChange;
-            game.KeyDown += Game_KeyDown;
-            game.KeyUp += Game_KeyUp;
+            form.KeyDown += Game_KeyDown;
+            form.KeyUp += Game_KeyUp;
         }
 
         public void Update(float dt)
@@ -53,33 +51,13 @@ namespace Game
                 rect.X -= speed * dt;
             }
 
-            if (isHorizontal)
-            {
-                if (rect.X < game.rect.Left + breadth)
-                {
-                    rect.X = game.rect.Left + breadth;
-                } else if (rect.Right > game.rect.Right - breadth)
-                {
-                    rect.X = game.rect.Right - breadth - length;
-                }
-            }
-            if (isVertical)
-            {
-                if (rect.Y < game.rect.Top + breadth)
-                {
-                    rect.Y = game.rect.Top + breadth;
-                }
-                else if (rect.Bottom > game.rect.Bottom - breadth)
-                {
-                    rect.Y = game.rect.Bottom - breadth - length;
-                }
-            }
+            CheckOutOfBounds();
         }
 
         public void Show(Graphics Graphics)
         {
             Graphics.FillRectangle(brush, rect);
-        }  
+        }
 
         private void Game_OnStateChange(object sender, GameEventArgs e)
         {
@@ -101,42 +79,8 @@ namespace Game
             }
         }
 
-        private void Game_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.A when isHorizontal:
-                    movementDirections.Left = true;
-                    break;
-                case Keys.D when isHorizontal:
-                    movementDirections.Right = true;
-                    break;
-                case Keys.W when isVertical:
-                    movementDirections.Up = true;
-                    break;
-                case Keys.S when isVertical:
-                    movementDirections.Down = true;
-                    break;
-            }
-        }
-
-        private void Game_KeyUp(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.A:
-                    movementDirections.Left = false;
-                    break;
-                case Keys.D:
-                    movementDirections.Right = false;
-                    break;
-                case Keys.W:
-                    movementDirections.Up = false;
-                    break;
-                case Keys.S:
-                    movementDirections.Down = false;
-                    break;
-            }
-        }
+        protected abstract void CheckOutOfBounds();
+        protected abstract void Game_KeyDown(object sender, KeyEventArgs e);
+        protected abstract void Game_KeyUp(object sender, KeyEventArgs e);
     }
 }

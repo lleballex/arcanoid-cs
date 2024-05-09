@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Arcanoid
+namespace arcanoid_cs
 {
     internal static class Program
     {
@@ -13,7 +10,7 @@ namespace Arcanoid
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameScene());
+            Application.Run(new GameForm());
         }
     }
 }

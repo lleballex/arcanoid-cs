@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game
+namespace arcanoid_cs
 {
     public class Speed
     {

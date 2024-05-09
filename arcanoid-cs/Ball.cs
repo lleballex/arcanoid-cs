@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Game
+namespace arcanoid_cs
 {
     public class Ball
     {
         public delegate void BallEvent(object sender, EventArgs e);
+
         public event BallEvent OnLeave;
 
         public RectangleF rect = new RectangleF(0, 0, 20, 20);
 
-        private IGame game;
+        private Game game;
 
         private SolidBrush brush;
+
         public Color color
         {
             get { return brush.Color; }
@@ -20,9 +22,8 @@ namespace Game
         }
 
         private Speed speed = new Speed(0.3f, 0);
-        private bool isMoving = false;
 
-        public Ball(IGame game_)
+        public Ball(Game game_)
         {
             game = game_;
             game.OnStateChange += Game_OnStateChange;
@@ -39,14 +40,13 @@ namespace Game
 
         public void Update(float dt)
         {
-            if (!isMoving) return;
+            if (game.state != GameState.Run) return;
 
             rect.X += speed.x * dt;
             rect.Y += speed.y * dt;
 
             if (!game.rect.IntersectsWith(Rectangle.Round(rect)))
             {
-                isMoving = false;
                 if (OnLeave != null)
                 {
                     OnLeave(this, new EventArgs());
@@ -77,21 +77,11 @@ namespace Game
             switch (e.state)
             {
                 case GameState.Init:
-                    isMoving = false;
-                    rect.Location = new Point(0, 0);
                     brush = new SolidBrush(Color.White);
                     Game_OnActivePlatformChange(this, new GameEventArgs(e.state, e.activePlatformIdx));
                     break;
                 case GameState.Setup:
-                    isMoving = false;
-                    rect.Location = new Point(0, 0);
                     Game_OnActivePlatformChange(this, new GameEventArgs(e.state, e.activePlatformIdx));
-                    break;
-                case GameState.Run:
-                    isMoving = true;
-                    break;
-                case GameState.Inactive:
-                    isMoving = false;
                     break;
             }
         }
@@ -112,11 +102,12 @@ namespace Game
                     speed.angle = 180 - speed.angle;
                 }
 
-                if (e.block != null && e.block.isSolid)
+                if (e.block != null && e.block.changesBallColor)
                 {
                     color = e.block.color;
                 }
-            } else if (e.platform != null && e.ball == this)
+            }
+            else if (e.platform != null && e.ball == this)
             {
                 float[] Collision = IntersectsWithRect(e.block != null ? e.block.rect : e.platform.rect);
 

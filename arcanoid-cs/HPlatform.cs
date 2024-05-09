@@ -1,12 +1,12 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
-namespace Game
+namespace arcanoid_cs
 {
     internal class HPlatform : Platform
     {
-        public HPlatform(IGame game, Side side) : base(game)
+        public HPlatform(Game game, Side side, Form form) : base(game, form)
         {
-            isHorizontal = true;
             rect.Width = length;
             rect.Height = breadth;
 
@@ -26,6 +26,44 @@ namespace Game
             }
 
             defaultLocation = new PointF((game.rect.Width - rect.Width) / 2, y);
+        }
+
+        protected override void CheckOutOfBounds()
+        {
+            if (rect.X < game.rect.Left + breadth)
+            {
+                rect.X = game.rect.Left + breadth;
+            }
+            else if (rect.Right > game.rect.Right - breadth)
+            {
+                rect.X = game.rect.Right - breadth - length;
+            }
+        }
+
+        protected override void Game_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    movementDirections.Left = true;
+                    break;
+                case Keys.D:
+                    movementDirections.Right = true;
+                    break;
+            }
+        }
+
+        protected override void Game_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.A:
+                    movementDirections.Left = false;
+                    break;
+                case Keys.D:
+                    movementDirections.Right = false;
+                    break;
+            }
         }
     }
 }

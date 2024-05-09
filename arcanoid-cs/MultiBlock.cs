@@ -1,12 +1,19 @@
 ﻿using System.Drawing;
 
-namespace Game
+namespace arcanoid_cs
 {
     internal class MultiBlock : Block
     {
-        public MultiBlock(IGame Game, Point Location) : base(Game, Location, Color.White)
+        public MultiBlock(Game Game, Point Location) : base(Game, Location, Color.White)
         {
-            isMulti = true;
+        }
+
+        protected override void Game_OnCollide(object sender, GameEventArgs e)
+        {
+            if (e.block == this && e.ball != null)
+            {
+                health--;
+            }
         }
     }
 }
