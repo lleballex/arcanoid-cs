@@ -55,12 +55,12 @@ namespace arcanoid_cs
                 SelectLevelToolStripMenuItem.DropDown.Items.Add(item);
             }
         }
+
         private void RestartToolStripMenuItem_Click(object sender, EventArgs e)
         {
             game.Restart();
         }
 
-        // TODO: make it event
         private void SelectLevel(object sender, EventArgs e)
         {
             ToolStripMenuItem item = (ToolStripMenuItem)sender;
