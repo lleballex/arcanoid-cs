@@ -45,7 +45,8 @@ namespace arcanoid_cs
         public event GameEvent OnCollide;
         public event GameEvent OnActivePlatformChange;
 
-        public Rectangle rect { get; } = new Rectangle(0, 24, 700, 700);
+        //public Rectangle rect { get; private set; } = new Rectangle();
+        public Rectangle rect;
 
         public Bitmap bmp;
 
@@ -59,7 +60,8 @@ namespace arcanoid_cs
         private int health;
 
         private Bitmap healthIconBitmap;
-            
+        //private Bitmap bgBitmap;
+
         private const int lastLevelIdx = 4;
         private int currentLevelIdx = 0;
 
@@ -67,10 +69,13 @@ namespace arcanoid_cs
 
         public Game(Form form)
         {
+            rect = new Rectangle(0, 30, 700, 700);
+
             bmp = new Bitmap(rect.Right, rect.Bottom);
             graphics = Graphics.FromImage(bmp);
 
             healthIconBitmap = new Bitmap(Image.FromFile("./assets/heart.png"), new Size(25, 25));
+            //bgBitmap = new Bitmap(Image.FromFile("./assets/background.png"));
 
             ball = new Ball(this);
             ball.OnLeave += Ball_OnLeave;
@@ -81,15 +86,24 @@ namespace arcanoid_cs
             platforms[2] = new HPlatform(this, Side.Bottom, form);
             platforms[3] = new VPlatform(this, Side.Left, form);
 
-            form.MouseClick += GameScene_MouseClick;
-            form.KeyDown += Game_KeyDown;
+            form.MouseClick += Form_MouseClick;
+            form.KeyDown += Form_KeyDown;
+            form.Resize += Form_Resize;
 
             ChangeState(GameState.Init);
         }
 
+        private void Form_Resize(object sender, EventArgs e)
+        {
+            Form form = sender as Form;
+            rect.Location = new Point(0, (int)Math.Ceiling(rect.Height / (float)form.Height * 30));
+        }
+
         public void Show()
         {
+            //graphics.DrawImage(bgBitmap, 0, 0, rect.Right, rect.Bottom);
             graphics.Clear(Color.Black);
+
             ball.Show(graphics);
 
             foreach (var block in blocks)
@@ -253,7 +267,7 @@ namespace arcanoid_cs
             }
         }
 
-        private void Game_KeyDown(object sender, KeyEventArgs e)
+        private void Form_KeyDown(object sender, KeyEventArgs e)
         {
             if ((state == GameState.Setup || state == GameState.Init) && e.KeyCode == Keys.Space)
             {
@@ -277,13 +291,18 @@ namespace arcanoid_cs
             }
         }
 
-        private void GameScene_MouseClick(object sender, MouseEventArgs e)
+        private void Form_MouseClick(object sender, MouseEventArgs e)
         {
             if (state == GameState.Init || state == GameState.Setup)
             {
+                Form form = sender as Form;
+                float ratioX = (float)rect.Width / form.Width * 1.03f;
+                float ratioY = (float)rect.Height / form.Height * 1.11f;
+                Point eLocation = new Point((int)(e.Location.X * ratioX), (int)(e.Location.Y * ratioY));
+
                 for (int i = 0; i < 4; i++)
                 {
-                    if (platforms[i].rect.Contains(e.Location))
+                    if (platforms[i].rect.Contains(eLocation))
                     {
                         ChangeActivePlatformIdx(i);
                         break;
@@ -292,7 +311,7 @@ namespace arcanoid_cs
             }
         }
 
-        private void LoadLevel(int idx)
+        private void LoadLevel(int idx) 
         {
             // ------------|
             // 0 - nothing |

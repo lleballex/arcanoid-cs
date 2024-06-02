@@ -20,9 +20,6 @@ namespace arcanoid_cs
 
             game = new Game(this);
 
-            Width = game.rect.Right + 16;
-            Height = game.rect.Bottom + 39;
-
             graphics = CreateGraphics();
 
             Timer timer = new Timer();
@@ -43,7 +40,7 @@ namespace arcanoid_cs
 
             prevTime = watch.ElapsedMilliseconds;
 
-            graphics.DrawImage(game.bmp, 0, 0);
+            graphics.DrawImage(game.bmp, 0, 0, Width - 16, Height - 39);
         }
 
         private void InitToolStrip()
@@ -77,6 +74,11 @@ namespace arcanoid_cs
         {
             HelpForm helpForm = new HelpForm();
             helpForm.ShowDialog(this);
+        }
+
+        private void GameForm_Resize(object sender, EventArgs e)
+        {
+            graphics = CreateGraphics();
         }
     }
 }

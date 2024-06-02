@@ -23,6 +23,7 @@ namespace arcanoid_cs
                 graphics.DrawRectangle(pen, newRect);
             }
         }
+
         protected override void Game_OnCollide(object sender, GameEventArgs e)
         {
         }

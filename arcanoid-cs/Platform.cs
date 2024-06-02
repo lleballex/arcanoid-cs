@@ -61,15 +61,7 @@ namespace arcanoid_cs
 
         private void Game_OnStateChange(object sender, GameEventArgs e)
         {
-            if (e.state == GameState.Init)
-            {
-                rect.Location = defaultLocation;
-                movementDirections.Up = false;
-                movementDirections.Right = false;
-                movementDirections.Down = false;
-                movementDirections.Left = false;
-            }
-            else if (e.state == GameState.Setup)
+            if (e.state == GameState.Init || e.state == GameState.Setup)
             {
                 rect.Location = defaultLocation;
                 movementDirections.Up = false;

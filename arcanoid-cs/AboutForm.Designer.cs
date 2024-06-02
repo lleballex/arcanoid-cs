@@ -39,16 +39,16 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(150, 83);
+            this.label1.Location = new System.Drawing.Point(159, 83);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 46);
+            this.label1.Size = new System.Drawing.Size(288, 58);
             this.label1.TabIndex = 0;
             this.label1.Text = "ARCANOID";
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(158, 391);
+            this.linkLabel1.Location = new System.Drawing.Point(158, 405);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(48, 16);
             this.linkLabel1.TabIndex = 1;
@@ -59,7 +59,7 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(371, 391);
+            this.linkLabel2.Location = new System.Drawing.Point(371, 405);
             this.linkLabel2.Name = "linkLabel2";
             this.linkLabel2.Size = new System.Drawing.Size(66, 16);
             this.linkLabel2.TabIndex = 2;
@@ -70,29 +70,29 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(105, 169);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Location = new System.Drawing.Point(115, 172);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(309, 100);
+            this.label2.Size = new System.Drawing.Size(368, 150);
             this.label2.TabIndex = 3;
             this.label2.Text = "That is brand new Arcanoid game \r\nwritten in C# with Windows Forms.\r\n\r\nPlay it an" +
-    "d have a lot of fun.\r\n";
+    "d have a lot of fun.\r\n\r\nAuthor: Alexey Lebedev, student of ISPU";
             this.label2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(255, 350);
+            this.label3.Location = new System.Drawing.Point(255, 364);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(67, 17);
+            this.label3.Size = new System.Drawing.Size(81, 20);
             this.label3.TabIndex = 4;
             this.label3.Text = "Contacts:";
             // 
-            // About
+            // AboutForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.ClientSize = new System.Drawing.Size(602, 544);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -100,7 +100,7 @@
             this.Controls.Add(this.linkLabel2);
             this.Controls.Add(this.linkLabel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "About";
+            this.Name = "AboutForm";
             this.Text = "About | ARCANOID by lleballex";
             this.ResumeLayout(false);
             this.PerformLayout();
